@@ -1,0 +1,124 @@
+<?php
+echo '	/**
+    * Input filters
+    *
+    * @param void
+    * @return Zend\InputFilter\InputFilter
+    */
+    public function getInputFilter()
+    {
+
+        if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
+            $factory     = new InputFactory();
+';
+
+
+$aInputFilters = '';
+
+foreach($this->fieldMappings AS $field){
+
+    $aTmpFilter = array();
+
+    $aTmpFilter['name'] 		= $field['fieldName'];
+    $aTmpFilter['required'] 	= $field['nullable'] ? false : true;
+    $aTmpFilter['filters'] 		= array();
+    $aTmpFilter['validators'] 	= array();
+
+    if($field['type'] == 'integer'){
+
+        $aTmpFilter['filters'][] = array('name' => 'Int');
+
+        if($field['unsigned'] == true){
+            $min = 0;
+            $max = 4294967295;
+        } else {
+            $min = (int) -2147483648;
+            $max = 2147483647;
+        }
+
+        $aTmpFilter['validators'][] = array('name' => 'Between',
+            'options' => array('min' => $min,
+                'max' => $max));
+    } elseif($field['type'] == 'smallint'){
+
+        $aTmpFilter['filters'][] = array('name' => 'Int');
+        $aTmpFilter['validators'][] = array('name' => 'Between',
+            'options' => array('min' => (int) -32768,
+                'max' => 32767));
+
+    } elseif($field['type'] == 'bigint'){
+
+        $aTmpFilter['filters'][] = array('name' => 'Int');
+        $aTmpFilter['validators'][] = array('name' => 'Between',
+            'options' => array('min' => (int) -9223372036854775808,
+                'max' => 9223372036854775807));
+
+
+    } elseif($field['type'] == 'string' AND $field['length'] != null){
+
+        $aTmpFilter['filters'][] = array('name' => 'StripTags');
+        $aTmpFilter['filters'][] = array('name' => 'StringTrim');
+        $aTmpFilter['validators'][] = array('name' => 'StringLength',
+            'options' => array(
+                'encoding' => 'UTF-8',
+                'min'      => 1,
+                'max'      => $field['length'],
+            ));
+
+
+    }  elseif($field['type'] == 'string' OR $field['type'] == 'simplearray'){
+
+
+        die('Exit: No enums supportet so far.');
+        echo 'WARNING: enum detected. Please edit the generated validators. class: '.$this->className.' field: '.$field['fieldName'], E_USER_WARNING;
+
+        $aTmpFilter['filters'][] = array('name' => 'StripTags');
+        $aTmpFilter['filters'][] = array('name' => 'StringTrim');
+        $aTmpFilter['validators'][] = array('name' => 'InArray',
+            'options' => array(
+                'haystack' => array('PUT', 'ENUM', 'VALUES', 'HERE'),
+            ));
+
+
+    } elseif($field['type'] == 'boolean'){
+
+        $aTmpFilter['filters'][] = array('name' => 'boolean');
+
+    } elseif($field['type'] == 'text'){
+
+        $aTmpFilter['filters'][] = array('name' => 'boolean');
+
+    } elseif($field['type'] == 'float' OR $field['type'] == 'decimal'){
+
+        //@todo Float: Filter-Validators
+
+    } elseif($field['type'] == 'date'){
+
+        $aTmpFilter['validators'][] = array('name' => 'Date',
+            'locale' => 'de');
+
+    } else {
+        throw new \Exception('unknown datatype detected: '.$field['type']);
+    }
+
+    $aInputFilters[] = '$inputFilter->add($factory->createInput('.var_export($aTmpFilter, true).'));';
+}
+
+$implodedFilters = implode($aInputFilters, "\n\n\n");
+$explodedFilters = explode("\n", $implodedFilters);
+
+foreach($explodedFilters AS $key => $val){
+    $explodedFilters[$key] = chr(9).chr(9).chr(9).$val;
+}
+
+
+echo implode($explodedFilters, "\n");
+
+
+echo '
+            $this->inputFilter = $inputFilter;
+        }
+
+        return $this->inputFilter;
+    }';

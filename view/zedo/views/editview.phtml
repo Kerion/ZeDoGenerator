@@ -1,0 +1,22 @@
+<?php
+echo '<?php
+    $title = \'Edit '.$this->name.'\';
+    $this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+    $form = $this->form;
+    $form->setAttribute(\'action\', $this->url(
+        \''.$this->route.'\',
+        array(
+            \'action\' => \'edit\',
+            \'id\'     => $this->id,
+        )
+    ));
+    $form->prepare();
+
+    echo $this->form()->openTag($form);
+    '.$this->form.'
+    echo $this->formSubmit($form->get(\'submit\'));
+    echo $this->form()->closeTag();';

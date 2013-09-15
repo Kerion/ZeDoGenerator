@@ -1,0 +1,15 @@
+<?php
+echo '	/**
+	* Populate from an array.
+	*
+	* @param array $data
+	*/
+	public function populate($data = array())
+	{';
+
+foreach($this->fieldMappings AS $field){
+    echo chr(9).chr(9).'$this->'.$field['fieldName'].' = $data[\''.$field['fieldName'].'\'];'."\n";
+}
+
+echo '
+	}';

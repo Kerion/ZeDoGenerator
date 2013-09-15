@@ -1,0 +1,21 @@
+{
+    "name": "zedogenerator",
+    "description": "Zend Framework 2 - Doctrine - Generator for Entities and Modules from existing Databases",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "",
+    "version": 0.0.1-dev
+    "keywords": [
+        "zedogenerator"
+    ],
+    "authors": [
+        {
+            "name": "Daniel Kreckel",
+            "email": "daniel.kreckel@gmx.de"
+        },
+    ],
+    "require": {
+        "zendframework/zendframework": "2.2.*",
+        "doctrine/doctrine-orm-module": "0.*"
+    },
+}

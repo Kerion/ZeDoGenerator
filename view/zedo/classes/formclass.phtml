@@ -1,0 +1,54 @@
+<?php
+echo '<?php
+namespace '.$this->namespace.'\Form;
+
+use Zend\Form\Form;
+
+class '.$this->classname.' extends Form
+{
+    public function __construct()
+    {
+
+        parent::__construct();
+        $this->setAttribute(\'method\', \'post\');
+
+        ';
+
+$formFields = array();
+
+foreach($this->fieldMappings AS $field){
+
+    //@todo something else than text
+    $type = 'text';
+
+    $aTmpForm = array();
+
+    $aTmpForm['name'] 		= $field['fieldName'];
+    $aTmpForm['attributes'] 	= array('type' => $type, 'id' => $field['fieldName']);
+    $aTmpForm['options'] 		= array('label' => $field['fieldName']);
+
+    $formFields[] = '$this->add('.var_export($aTmpForm, true).');';
+
+}
+
+
+$aTmpForm = array();
+
+$aTmpForm['name'] 		    = 'submit';
+$aTmpForm['attributes'] 	= array('type' => 'submit', 'value' => 'Go', 'id' => 'submit');
+
+$formFields[] = '$this->add('.var_export($aTmpForm, true).');';
+
+
+$implodedForms = implode($formFields, "\n\n\n");
+$explodedForms = explode("\n", $implodedForms);
+
+foreach($explodedForms AS $key => $val){
+    $explodedForms[$key] = chr(9).chr(9).chr(9).$val;
+}
+
+echo implode($explodedForms, "\n");
+
+echo '
+    }
+}';

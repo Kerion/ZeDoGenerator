@@ -1,0 +1,26 @@
+<?php
+echo '<?php
+    $title = \'Show '.$this->name.'\';
+    $this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url(\''.$this->route.'\', array(\'action\'=>\'add\'));?>">Add '.$this->name.'</a>
+</p>
+
+<table class="table">
+<tr>
+    '.$this->tableheads.'
+</tr>
+<?php foreach ($this->'.$this->route.' as $item) : ?>
+<tr>
+'.$this->tablefields.'
+  <td>
+        <a href="<?php echo $this->url(\''.$this->route.'\',
+        array(\'action\'=>\'edit\', \'id\' => $item->getId()));?>">Edit</a>
+        <a href="<?php echo $this->url(\''.$this->route.'\',
+        array(\'action\'=>\'delete\', \'id\' => $item->getId()));?>">Delete</a>
+  </td>
+</tr>
+<?php endforeach; ?>
+</table>';
