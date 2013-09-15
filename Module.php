@@ -7,9 +7,16 @@ use Zend\ModuleManager\Feature\ConsoleBannerProviderInterface;
 
 use Zend\View\Resolver;
 
+/**
+ * Class Module
+ * @package ZeDoGenerator
+ */
 class Module implements ConsoleBannerProviderInterface, ConsoleUsageProviderInterface
 {
 
+    /**
+     * @return array
+     */
     public function getAutoloaderConfig()
 	{
 		return array(
@@ -20,20 +27,31 @@ class Module implements ConsoleBannerProviderInterface, ConsoleUsageProviderInte
 			),
 		);
 	}
-	
-	public function getConfig()
+
+    /**
+     * @return array
+     */
+    public function getConfig()
 	{
         return array_merge(include __DIR__ . '/config/module.config.php',
                            include __DIR__ . '/config/routing.config.php',
                            include __DIR__ . '/config/di.config.php'
         );
 	}
-	
+
+    /**
+     * @param Console $console
+     * @return string
+     */
     public function getConsoleBanner(Console $console)
     {
         return 'ZeDoModel-Creator 0.0.2';
     }
-	
+
+    /**
+     * @param Console $console
+     * @return array
+     */
     public function getConsoleUsage(Console $console){
 
         return array(

@@ -3,10 +3,17 @@ namespace ZeDoGenerator\Controller\CreationController;
 
 use ZeDoGenerator\Controller\AbstractCreationController;
 
+/**
+ * Class ZedomodelCreationController
+ * @package ZeDoGenerator\Controller\CreationController
+ */
 class ZedomodelCreationController extends AbstractCreationController
 {
 
-	protected function generate()
+    /**
+     *
+     */
+    protected function generate()
 	{
         $metadata = $this->getMetadata();
 		

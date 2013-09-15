@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: Kerion
- * Date: 27.08.13
- * Time: 20:51
- * To change this template use File | Settings | File Templates.
- */
 
 namespace ZeDoGenerator\Service\Generators;
 
@@ -13,9 +6,19 @@ namespace ZeDoGenerator\Service\Generators;
 use ZeDoGenerator\Service\AbstractClassGenerator;
 use Zend\View\Model\ViewModel;
 
+/**
+ * Class ControllerClassGenerator
+ * @package ZeDoGenerator\Service\Generators
+ */
 class ControllerClassGenerator extends AbstractClassGenerator{
 
+    /**
+     * @var
+     */
     private $entityManager;
+    /**
+     * @var
+     */
     private $tableName;
 
     /**
@@ -60,6 +63,9 @@ class ControllerClassGenerator extends AbstractClassGenerator{
         return $this->tableName;
     }
 
+    /**
+     * @return bool
+     */
     public function generateClass(){
 
         $view = new ViewModel(array('namespace' => $this->getNamespace(),

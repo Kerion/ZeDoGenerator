@@ -25,6 +25,9 @@ class ViewGenerator extends AbstractFileGenerator{
      */
     private $tableFields;
 
+    /**
+     * @var
+     */
     private $route;
 
     /**
@@ -54,6 +57,9 @@ class ViewGenerator extends AbstractFileGenerator{
         return true;
     }
 
+    /**
+     * @param $route
+     */
     public function setRoute($route){
         $this->route = $route;
     }
