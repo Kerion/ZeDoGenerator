@@ -1,5 +1,5 @@
 {
-    "name": "Kerion/ZeDoGenerator",
+    "name": "zedogenerator",
     "description": "Zend Framework 2 - Doctrine - Generator for Entities and Modules from existing Databases",
     "type": "library",
     "license": "MIT",
