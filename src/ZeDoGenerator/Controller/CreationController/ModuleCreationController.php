@@ -61,7 +61,7 @@ class ModuleCreationController  extends AbstractCreationController{
             }
         }
 
-        if(!is_dir($filepath) AND !mkdir($filepath, '0777', true)){
+        if(!is_dir($filepath) AND !mkdir($filepath, 0777, true)){
             return 'EXIT: Directory could not be created.';
         }
 
