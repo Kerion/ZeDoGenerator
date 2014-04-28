@@ -1,5 +1,4 @@
 <?php
-
 namespace ZeDoGenerator\Service;
 
 abstract class AbstractClassGenerator extends AbstractFileGenerator{

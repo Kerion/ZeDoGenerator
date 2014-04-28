@@ -69,8 +69,6 @@ foreach($this->fieldMappings AS $field){
 
     }  elseif($field['type'] == 'string' OR $field['type'] == 'simplearray'){
 
-
-        die('Exit: No enums supportet so far.');
         echo 'WARNING: enum detected. Please edit the generated validators. class: '.$this->className.' field: '.$field['fieldName'], E_USER_WARNING;
 
         $aTmpFilter['filters'][] = array('name' => 'StripTags');
@@ -85,7 +83,7 @@ foreach($this->fieldMappings AS $field){
 
         $aTmpFilter['filters'][] = array('name' => 'boolean');
 
-    } elseif($field['type'] == 'text'){
+    } elseif($field['type'] == 'text' OR $field['type'] == 'blob'){
 
         $aTmpFilter['filters'][] = array('name' => 'boolean');
 
@@ -94,6 +92,11 @@ foreach($this->fieldMappings AS $field){
         //@todo Float: Filter-Validators
 
     } elseif($field['type'] == 'date'){
+
+        $aTmpFilter['validators'][] = array('name' => 'Date',
+            'locale' => 'de');
+
+    } elseif($field['type'] == 'datetime'){
 
         $aTmpFilter['validators'][] = array('name' => 'Date',
             'locale' => 'de');

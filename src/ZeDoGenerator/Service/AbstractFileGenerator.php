@@ -1,5 +1,4 @@
 <?php
-
 namespace ZeDoGenerator\Service;
 
 use Doctrine\ORM\Mapping\ClassMetadata;

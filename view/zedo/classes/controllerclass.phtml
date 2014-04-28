@@ -45,13 +45,13 @@ class '.$this->namespace.'Controller extends AbstractActionController
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $model = new '.$this->tableName.'();
-            $form->setInputFilter($model->getInputFilter());
+            $entity = new '.$this->tableName.'();
+            $form->setInputFilter($entity->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
 
-                $model->populate($form->getData());
-                $this->getEntityManager()->persist($model);
+                $entity->populate($form->getData());
+                $this->getEntityManager()->persist($entity);
                 $this->getEntityManager()->flush();
 
                 return $this->redirect()->toRoute(\''.strtolower($this->namespace).'\');
@@ -102,7 +102,7 @@ class '.$this->namespace.'Controller extends AbstractActionController
 
             $del = $request->getPost()->get(\'del\', \'No\');
             if ($del == \'Yes\') {
-                $id = (int)$request->getPost()->get(\'id\');
+
                 $entity = $this->getEntityManager()->find(\''.$this->namespace.'\Entity\\'.$this->tableName.'\', $id);
                 if ($entity) {
                     $this->getEntityManager()->remove($entity);

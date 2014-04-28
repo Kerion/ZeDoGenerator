@@ -62,9 +62,9 @@ class Module implements ConsoleBannerProviderInterface, ConsoleUsageProviderInte
 
             // Describe expected parameters
             array('--all|-a',		'Create all Entitys of the Database'),
-            array('--entityName=',	'The Name of the Entity/Table to be created'),
-            array('--namespace=',	'The Namespace to be used'),
-            array('--dir=',	        'The Directory where the files shold been droped'),
+            array('--entityName=',	'The name of the Entity/Table to be created'),
+            array('--namespace=',	'The namespace to be used'),
+            array('--dir=',	        'The directory where the files should been droped'),
         );
     }
 }

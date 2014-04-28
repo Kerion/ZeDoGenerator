@@ -22,6 +22,11 @@ class ZedomodelCreationController extends AbstractCreationController
 	
 			$generator = $this->getDi()->get('ZeDoGenerator\Service\Generators\ZeDoMoGenerator');
             $generator->setNamespace($this->getNamespace());
+			
+			if($this->getDatabase() !== null){
+				$generator->setDatabase($this->getDatabase());
+			}
+			
 		
 			foreach ($metadata as $onemetadata) {
 

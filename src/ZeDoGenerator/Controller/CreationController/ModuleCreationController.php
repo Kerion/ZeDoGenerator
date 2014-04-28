@@ -61,7 +61,7 @@ class ModuleCreationController  extends AbstractCreationController{
             }
         }
 
-        if(!is_dir($filepath) AND !mkdir($filepath, '0777', true)){
+        if(!is_dir($filepath) AND !mkdir($filepath, 0777, true)){
             return 'EXIT: Directory could not be created.';
         }
 
@@ -219,6 +219,11 @@ class ModuleCreationController  extends AbstractCreationController{
         $oEntityGenerator->setNamespace($this->getNamespace().'\Entity');
         $oEntityGenerator->setFilePath($this->getFilePath().'/src/'.$this->getNamespace().'/Entity');
         $oEntityGenerator->setMetaData($this->getMetadata()[0]);
+		
+		if(isset($this->getDatabase())){
+			$oEntityGenerator->setDatabase($this->getDatabase());
+		}
+		
         $oEntityGenerator->generateClass();
 
     }

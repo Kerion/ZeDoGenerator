@@ -18,6 +18,8 @@ class ZeDoMoGenerator extends AbstractClassGenerator{
      */
     private $entityGenerator;
 
+    private $database;
+
     /**
      * @var string
      */
@@ -34,6 +36,12 @@ use Zend\InputFilter\Factory as InputFactory;\n";
 		$this->entityGenerator->setGenerateStubMethods(true);
 	}
 
+	public function setDatabase($database){
+		if(!is_string($database)){
+			throw new \Exception('Invalid database given');
+		}
+		$this->database = $database;
+	}
 
     /**
      * @return bool
@@ -44,7 +52,7 @@ use Zend\InputFilter\Factory as InputFactory;\n";
         $metadata = $this->getMetaData();
 
 		$this->setClassName($metadata->name);
-
+		
 		// setting the namespace
 		$metadata->name = $this->getNamespace().'\\'.$metadata->name;
 
@@ -53,6 +61,11 @@ use Zend\InputFilter\Factory as InputFactory;\n";
 			throw new \Exception('Entity class could not be created');
 		}
 
+		// TableAnnotation-Update if a Database is given
+		if(isset($this->database)){
+			$this->updateTableAnnotation();
+		}
+		
 		$this->generateUseStatements();
 
 		$this->generateMethods();
@@ -76,6 +89,13 @@ use Zend\InputFilter\Factory as InputFactory;\n";
         return true;
 
 	}
+
+    private function updateTableAnnotation(){
+
+		$exploded = explode('@ORM\Table(name="', $this->generatedCode);
+        $exploded[1] = $this->database.'.'.$exploded[1];
+        $this->generatedCode = implode('@ORM\Table(name="', $exploded);
+    }
 
 
     /**

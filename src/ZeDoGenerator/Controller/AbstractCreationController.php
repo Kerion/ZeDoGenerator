@@ -22,6 +22,8 @@ abstract class AbstractCreationController extends AbstractActionController
     protected $filepath;
 
     protected $tables;
+	
+    protected $database;
 
     private $metadata;
 
@@ -89,6 +91,22 @@ abstract class AbstractCreationController extends AbstractActionController
     public function getTables()
     {
         return $this->tables;
+    }
+	
+    /**
+     * @param array $tables
+     */
+    public function setDatabase($database)
+    {
+        $this->database = $database;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDatabase()
+    {
+        return $this->database;
     }
 
     protected function getDi(){
@@ -192,10 +210,9 @@ abstract class AbstractCreationController extends AbstractActionController
 
         $this->setTables($tables);
 
-
         $this->generate();
 
-        return 'Files successfully created';
+        return 'Files successfully created'."\n";
     }
 
 
@@ -217,9 +234,17 @@ abstract class AbstractCreationController extends AbstractActionController
                 $databaseDriver
             );
 
-            // Doctrine dosn't support mysql-enums, so we declare them here to a string
+			// Setting the Database for annotation-prefix
+			$this->setDatabase($em->getConnection()->getDatabase());
+		
+            // Doctrine dosn't support mysql-enums, so we declare them here as a string
             $conn = $em->getConnection();
             $conn->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+			//@todo more typemappings??
+            //$conn->getDatabasePlatform()->registerDoctrineTypeMapping('datetime', 'string');
+
+            //\Doctrine\DBAL\Types\Type::addType('blob', 'Doctrine\DBAL\Types\Blob');
+            //$em->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('blob', 'string');
 
             $cmf = new DisconnectedClassMetadataFactory();
             $cmf->setEntityManager($em);
