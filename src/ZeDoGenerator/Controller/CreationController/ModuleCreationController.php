@@ -148,7 +148,7 @@ class ModuleCreationController  extends AbstractCreationController{
         $fileName = 'module/' . $this->getNamespace() . '/config/module.config.php';
 
         if(!is_dir(dirname($fileName))){
-            mkdir(dirname($fileName), 777);
+            mkdir(dirname($fileName), 0777);
         }
 
         $oModuleConfig->toFile($fileName, $aModuleConfig);

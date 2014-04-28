@@ -167,7 +167,7 @@ abstract class AbstractCreationController extends AbstractActionController
         if(!is_dir($filepath)){
 
             if (Confirm::prompt('Directory '.$filepath.' does not exist. Create? [y/n]', 'y', 'n') ) {
-                if(!mkdir($filepath, '0777', true)){
+                if(!mkdir($filepath, 0777, true)){
                     return 'EXIT: Directory could not be created.';
                 }
             } else {
