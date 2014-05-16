@@ -113,7 +113,8 @@ abstract class AbstractCreationController extends AbstractActionController
 
         if(!isset($this->di)){
             $this->di = $this->getServiceLocator()->get('di');
-            $this->di->configure(new Config($this->getServiceLocator()->get('config')['di']));
+            $config   = $this->getServiceLocator()->get('config');
+            $this->di->configure(new Config($config['di']));
         }
 
         return $this->di;
